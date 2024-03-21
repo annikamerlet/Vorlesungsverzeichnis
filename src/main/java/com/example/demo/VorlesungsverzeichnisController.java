@@ -24,7 +24,8 @@ public class VorlesungsverzeichnisController {
         List<String> filterListe = List.of(alleFilter.split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
         List<Vorlesung> vorlesungen = vorlesungenRepository.findAll(); // Liste mit allen Vorlesungen
 
-        for (String element : filterListe) {
+        for (String element : filterListe) // passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
+        {
             vorlesungen = vorlesungen.stream()
                     .filter(w -> (w.getWochentag().contains(element) || w.getBezeichnung().contains(element))).collect(Collectors.toList());
         }
