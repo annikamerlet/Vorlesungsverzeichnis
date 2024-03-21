@@ -26,12 +26,30 @@ public class Vorlesung {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getBezeichnung() {
         return bezeichnung;
     }
 
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
+
     public String getWochentag() {
         return wochentag;
+    }
+
+    public void setWochentag(String wochentag) {
+        this.wochentag = wochentag;
+    }
+
+    @Override
+    public String toString() {
+        return this.getId().toString() + "Vorlesung" + this.getBezeichnung()
+                + " Wochentag" + this.getWochentag() + "\\n";
     }
 
 }

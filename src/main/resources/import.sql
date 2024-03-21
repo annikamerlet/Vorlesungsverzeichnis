@@ -1,0 +1,1 @@
+insert into Vorlesung (id, bezeichnung, wochentag) values ('-3', 'Vorlesung 1', 'Montag'), ('-2', 'Vorlesung 2', 'Dienstag');
