@@ -20,7 +20,8 @@ public class VorlesungsverzeichnisController {
     @GetMapping
     public String Vorlesungsverzeichnis(Model model, @RequestParam(required = false, defaultValue = "") String WochentagFilter) {
         model.addAttribute("Vorlesungsverzeichnis",
-                vorlesungen.findAll().stream().filter(v -> v.getWochentag().contains(WochentagFilter)).collect(Collectors.toList()));
+                vorlesungen.findAll().stream()
+                        .filter(w -> (w.getWochentag().contains(WochentagFilter) || w.getBezeichnung().contains(WochentagFilter))).collect(Collectors.toList()));
         return "Vorlesungsverzeichnis";
     }
 

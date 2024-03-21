@@ -3,7 +3,14 @@
 
 <h1>Vorlesungsverzeichnis</h1>
 
-<h3>nach Wochentag filtern:</h3>
+<label for="filtereinstellung">Wähle eine Filteroption:</label>
+
+<!--<select id="filtereinstellung" name="filtereinstellung">-->
+<!--    <option value="bezeichnung">Vorlesung</option>-->
+<!--    <option value="wochentag">Wochentag</option>-->
+<!--</select>-->
+
+<h3>Filter:</h3>
 <form>
     <input name="WochentagFilter" th:value="${filter}" type="text">
     <input type="submit">
