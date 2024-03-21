@@ -48,8 +48,8 @@ public class Vorlesung {
 
     @Override
     public String toString() {
-        return this.getId().toString() + "Vorlesung" + this.getBezeichnung()
-                + " Wochentag" + this.getWochentag() + "\\n";
+        return this.getId().toString() + " Vorlesung: " + this.getBezeichnung()
+                + " Wochentag: " + this.getWochentag();
     }
 
 }
