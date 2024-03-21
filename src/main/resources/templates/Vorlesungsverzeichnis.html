@@ -1,7 +1,16 @@
 <html>
 <body>
-<h3>Vorlesungsverzeichnis</h3>
+
+<h1>Vorlesungsverzeichnis</h1>
+
+<h3>nach Wochentag filtern:</h3>
+<form>
+    <input name="WochentagFilter" th:value="${filter}" type="text">
+    <input type="submit">
+</form>
+
 <div th:each="vorlesung : ${Vorlesungsverzeichnis}" th:text="${vorlesung}">
 </div>
+
 </body>
 </html>

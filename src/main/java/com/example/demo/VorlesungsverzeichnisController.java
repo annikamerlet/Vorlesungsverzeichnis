@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.stream.Collectors;
 
 @Controller // Controller befüllt Model, damit der View (html-Datei) die Daten aus dem Model darstellen kann
 @RequestMapping("/Vorlesungsverzeichnis")
@@ -15,8 +18,9 @@ public class VorlesungsverzeichnisController {
     private VorlesungsverzeichnisRepository vorlesungen;
 
     @GetMapping
-    public String Vorlesungsverzeichnis(Model model) {
-        model.addAttribute("Vorlesungsverzeichnis", vorlesungen.findAll().stream());
+    public String Vorlesungsverzeichnis(Model model, @RequestParam(required = false, defaultValue = "") String WochentagFilter) {
+        model.addAttribute("Vorlesungsverzeichnis",
+                vorlesungen.findAll().stream().filter(v -> v.getWochentag().contains(WochentagFilter)).collect(Collectors.toList()));
         return "Vorlesungsverzeichnis";
     }
 
