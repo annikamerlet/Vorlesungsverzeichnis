@@ -13,6 +13,9 @@ public class Vorlesung {
     private String bezeichnung;
     private String wochentag;
 
+    private boolean ausgewaehlt;
+
+
     public Vorlesung() {
         // required by hibernate
     }
@@ -44,6 +47,14 @@ public class Vorlesung {
 
     public void setWochentag(String wochentag) {
         this.wochentag = wochentag;
+    }
+
+    public boolean isAusgewaehlt() {
+        return ausgewaehlt;
+    }
+
+    public void setAusgewaehlt(boolean ausgewaehlt) {
+        this.ausgewaehlt = ausgewaehlt;
     }
 
     @Override
