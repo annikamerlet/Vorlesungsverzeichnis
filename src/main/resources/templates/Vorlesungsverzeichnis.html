@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
 </head>
 
 <body>
@@ -13,6 +14,7 @@
 <!--    <option value="wochentag">Wochentag</option>-->
 <!--</select>-->
 
+
 <h3>Suche:</h3>
 <form>
     <input name="alleFilter" th:value="${filter}" type="text">
@@ -20,31 +22,31 @@
 </form>
 
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Vorlesungstitel</th>
-        <th scope="col">Wochentag</th>
-        <th scope="col">ausgewählte Vorlesungen</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="vorlesung : ${Vorlesungsverzeichnis}">
-        <td th:text="${vorlesung.bezeichnung}"></td>
-        <td th:text="${vorlesung.wochentag}"></td>
-        <td>
-            </form>
-            <form method="post">
+<form method="post">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Vorlesungstitel</th>
+            <th scope="col">Wochentag</th>
+            <th scope="col">ausgewählte Vorlesungen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vorlesung : ${Vorlesungsverzeichnis}">
+            <td th:text="${vorlesung.bezeichnung}"></td>
+            <td th:text="${vorlesung.wochentag}"></td>
+            <td>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <input class="form-check-input" id="flexSwitchCheckDefault" type="checkbox">
                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                 </div>
-            </form>
-        </td>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<button class="btn btn-primary btn-lg" type="button">Large button</button>
 
-    </tr>
-    </tbody>
-</table>
 
 </body>
 </html>
