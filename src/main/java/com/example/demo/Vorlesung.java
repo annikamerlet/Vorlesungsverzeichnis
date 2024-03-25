@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+import java.util.List;
+
 @Entity
 public class Vorlesung {
 
@@ -12,6 +14,10 @@ public class Vorlesung {
     private Long id;
     private String bezeichnung;
     private String wochentag;
+    private String uhrzeit;
+    
+    private List<Long> vorausgesetzteVorlesungen;
+
 
     private boolean ausgewaehlt;
 
@@ -54,6 +60,22 @@ public class Vorlesung {
 
     public void setAusgewaehlt(boolean ausgewaehlt) {
         this.ausgewaehlt = ausgewaehlt;
+    }
+
+    public String getUhrzeit() {
+        return uhrzeit;
+    }
+
+    public void setUhrzeit(String uhrzeit) {
+        this.uhrzeit = uhrzeit;
+    }
+
+    public List<Long> getVorausgesetzteVorlesungen() {
+        return vorausgesetzteVorlesungen;
+    }
+
+    public void setVorausgesetzteVorlesungen(List<Long> vorausgesetzteVorlesungen) {
+        this.vorausgesetzteVorlesungen = vorausgesetzteVorlesungen;
     }
 
     @Override
