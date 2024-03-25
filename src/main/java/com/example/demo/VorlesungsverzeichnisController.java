@@ -25,8 +25,10 @@ public class VorlesungsverzeichnisController {
         List<String> filterListe = List.of(alleFilter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
         List<Vorlesung> vorlesungen = vorlesungenRepository.findAll(); // Liste mit allen Vorlesungen
 
+        // case-insensitivity
         for (Vorlesung vorlesung : vorlesungen) {
             vorlesung.setBezeichnung(vorlesung.getBezeichnung().toLowerCase());
+            vorlesung.setWochentag(vorlesung.getWochentag().toLowerCase());
         }
 
         for (String element : filterListe) // passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
