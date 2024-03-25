@@ -2,6 +2,9 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,13 +14,59 @@ public class Service {
     private VorlesungsverzeichnisRepository vorlesungenRepository;
 
     public List<Vorlesung> erhalteGefilterteVorlesungen(String filter) {
+
         List<String> filterListe = List.of(filter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
         List<Vorlesung> vorlesungen = vorlesungenRepository.findAll(); // Liste mit allen Vorlesungen
-        for (String element : filterListe) // passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
+
+        for (String element : filterListe) // über Filter schleifen: passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
         {
             vorlesungen = vorlesungen.stream()
                     .filter(w -> (w.getWochentag().toLowerCase().contains(element) || w.getBezeichnung().toLowerCase().contains(element))).collect(Collectors.toList());
         }
+
         return vorlesungen;
     }
+
+    public List<LinkedHashMap> erhalteSortierteVorlesungen(String filter) {
+        List<Vorlesung> alleVorlesungen = erhalteGefilterteVorlesungen(filter);
+
+        //Liste: Vorlesungen nach Zeitslot sortiert
+        List<Vorlesung> ZeitslotEins = alleVorlesungen.stream().filter(vor -> vor.getUhrzeit().equals(LocalTime.of(8, 30))).collect(Collectors.toList());
+        List<Vorlesung> ZeitslotZwei = alleVorlesungen.stream().filter(vor -> vor.getUhrzeit().equals(LocalTime.of(10, 15))).collect(Collectors.toList());
+
+
+        //Hash-Tabelle: Vorlesung nach Zeitslot und Tag sortiert
+        LinkedHashMap<String, List<Vorlesung>> ersterZeitslot = new LinkedHashMap<>();
+        ersterZeitslot.put("Montag", erstelleVorlesungenImZeitslot(ZeitslotEins, "Montag"));
+        ersterZeitslot.put("Dienstag", erstelleVorlesungenImZeitslot(ZeitslotEins, "Dienstag"));
+        ersterZeitslot.put("Mittwoch", erstelleVorlesungenImZeitslot(ZeitslotEins, "Mittwoch"));
+        ersterZeitslot.put("Donnerstag", erstelleVorlesungenImZeitslot(ZeitslotEins, "Donnerstag"));
+        ersterZeitslot.put("Freitag", erstelleVorlesungenImZeitslot(ZeitslotEins, "Freitag"));
+
+        LinkedHashMap<String, List<Vorlesung>> zweiterZeitslot = new LinkedHashMap<>();
+        zweiterZeitslot.put("Montag", erstelleVorlesungenImZeitslot(ZeitslotZwei, "Montag"));
+        zweiterZeitslot.put("Dienstag", erstelleVorlesungenImZeitslot(ZeitslotZwei, "Dienstag"));
+        zweiterZeitslot.put("Mittwoch", erstelleVorlesungenImZeitslot(ZeitslotZwei, "Mittwoch"));
+        zweiterZeitslot.put("Donnerstag", erstelleVorlesungenImZeitslot(ZeitslotZwei, "Donnerstag"));
+        zweiterZeitslot.put("Freitag", erstelleVorlesungenImZeitslot(ZeitslotZwei, "Freitag"));
+
+        //Liste aus LinkedHashMaps:
+        List<LinkedHashMap> sortierteVorlesungen = new ArrayList<>();
+        sortierteVorlesungen.add(ersterZeitslot);
+        sortierteVorlesungen.add(zweiterZeitslot);
+
+        return sortierteVorlesungen;
+    }
+
+    public List<Vorlesung> erstelleVorlesungenImZeitslot(List<Vorlesung> vorlesungen, String Wochentag) {
+
+        List<Vorlesung> vorlesungenWochentag = new ArrayList<>();
+        for (Vorlesung v : vorlesungen) {
+            if (v.getWochentag().equals(Wochentag)) {
+                vorlesungenWochentag.add(v);
+            }
+        }
+        return vorlesungenWochentag;
+    }
+
 }

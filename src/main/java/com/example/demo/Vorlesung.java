@@ -2,6 +2,7 @@ package com.example.demo;
 
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ public class Vorlesung {
     private Long id;
     private String bezeichnung;
     private String wochentag;
-    private String uhrzeit;
+    private LocalTime uhrzeit;
 
     @ElementCollection
     @CollectionTable(
@@ -67,13 +68,18 @@ public class Vorlesung {
         this.ausgewaehlt = ausgewaehlt;
     }
 
-    public String getUhrzeit() {
+    public LocalTime getUhrzeit() {
         return uhrzeit;
     }
 
-    public void setUhrzeit(String uhrzeit) {
-        this.uhrzeit = uhrzeit;
+    public void setUhrzeit(int stunde, int minute) {
+        this.uhrzeit = LocalTime.of(stunde, minute);
     }
+
+//    public void setUhrzeit(String zeit) {
+//        zeit=zeit(split())
+//        this.uhrzeit = LocalTime.of(zeit);
+//    }
 
     public List<Long> getVorausgesetzteVorlesungen() {
         return vorausgesetzteVorlesungen;

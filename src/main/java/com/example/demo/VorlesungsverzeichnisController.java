@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Controller // Controller befüllt Model, damit der View (html-Datei) die Daten aus dem Model darstellen kann
@@ -21,18 +22,9 @@ public class VorlesungsverzeichnisController {
     @GetMapping
     public String Vorlesungsverzeichnis(Model model, @RequestParam(required = false, defaultValue = "") String alleFilter) {
 
-        List<Vorlesung> vorlesungen = service.erhalteGefilterteVorlesungen(alleFilter);
+        List<LinkedHashMap> sortierteVorlesungen = service.erhalteSortierteVorlesungen(alleFilter);
+        model.addAttribute("Vorlesungsverzeichnis", sortierteVorlesungen);
 
-
-        // case-insensitivity
-//        List<Vorlesung> vorlesungenKleingeschrieben = vorlesungen;
-//        for (Vorlesung v : vorlesungenKleingeschrieben) {
-//            v.setBezeichnung(v.getBezeichnung().toLowerCase());
-//            v.setWochentag(v.getWochentag().toLowerCase());
-//        }
-
-
-        model.addAttribute("Vorlesungsverzeichnis", vorlesungen);
         return "Vorlesungsverzeichnis";
     }
 

@@ -26,21 +26,23 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Vorlesungstitel</th>
-            <th scope="col">Wochentag</th>
-            <th scope="col">ausgewählte Vorlesungen</th>
+            <th scope="col"></th>
+            <th scope="col">Montag</th>
+            <th scope="col">Dienstag</th>
+            <th scope="col">Mittwoch</th>
+            <th scope="col">Donnerstag</th>
+            <th scope="col">Freitag</th>
+
         </tr>
         </thead>
         <tbody>
-        <tr th:each="vorlesung : ${Vorlesungsverzeichnis}">
-            <td th:text="${vorlesung.bezeichnung}"></td>
-            <td th:text="${vorlesung.wochentag}"></td>
-            <td>
-                <div class="form-check">
-                    <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
-                    <!--<label class="form-check-label" for="flexCheckDefault">
-                        Default checkbox-->
-                    </label>
+        <tr th:each="zeitslot : ${Vorlesungsverzeichnis}">
+            <th th:text="${'Uhrzeit'}"></th>
+            <td th:each="wochentag : ${zeitslot}">
+                <div th:each="vorlesung : ${wochentag.value}" th:text="${vorlesung.bezeichnung}">
+                    <div class="form-check">
+                        <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                    </div>
                 </div>
             </td>
         </tr>

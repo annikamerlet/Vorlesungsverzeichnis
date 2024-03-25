@@ -8,4 +8,5 @@ public interface VorlesungsverzeichnisRepository extends JpaRepository<Vorlesung
 
 
     //List<Vorlesung> findAllByausgewaehltEquals(boolean value);
+
 }
