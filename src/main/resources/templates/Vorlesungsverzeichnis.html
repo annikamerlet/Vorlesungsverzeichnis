@@ -39,7 +39,9 @@
         <tr th:each="zeitslot : ${Vorlesungsverzeichnis}">
             <th th:text="${zeitslot.key}"></th>
             <td th:each="wochentag : ${zeitslot.value}">
-                <div th:each="vorlesung : ${wochentag.value}" th:text="${vorlesung.bezeichnung}">
+                <div th:each="vorlesung : ${wochentag.value}">
+                    <div th:text="${vorlesung.bezeichnung}"></div>
+                    <div th:text="${'Voraussetzung: '}+${vorlesung.vorausgesetzteVorlesungen}"></div>
                     <div class="form-check">
                         <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
                         <label class="form-check-label" for="flexCheckDefault">

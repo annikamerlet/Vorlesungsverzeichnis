@@ -13,6 +13,10 @@ public class Service {
     @Autowired // Vorlesungsverzeichnis erzeugt
     private VorlesungsverzeichnisRepository vorlesungenRepository;
 
+    //    public List<Vorlesung> semesterAnsicht(String filter){
+//        List<Vorlesung> alleVorlesungen = erhalteGefilterteVorlesungen(filter);
+//        alleVorlesungen.stream().filter(vor -> vor.getSemester().equals().collect(Collectors.toList());
+//    }
     public List<Vorlesung> erhalteGefilterteVorlesungen(String filter) {
 
         List<String> filterListe = List.of(filter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
@@ -58,7 +62,7 @@ public class Service {
         return sortierteVorlesungen;
     }
 
-    public List<Vorlesung> erstelleVorlesungenImZeitslot(List<Vorlesung> vorlesungen, String Wochentag) {
+    private List<Vorlesung> erstelleVorlesungenImZeitslot(List<Vorlesung> vorlesungen, String Wochentag) {
 
         List<Vorlesung> vorlesungenWochentag = new ArrayList<>();
         for (Vorlesung v : vorlesungen) {
@@ -67,6 +71,26 @@ public class Service {
             }
         }
         return vorlesungenWochentag;
+    }
+
+    public List<String> bezeichnungVorausgesetzteVorlesungen(Vorlesung v) {
+        List<Long> vorausgesetzteVorlesungenId = v.getVorausgesetzteVorlesungen();
+        List<String> vorausgesetzteVorlesungenBezeichnung = new ArrayList<>();
+        for (Long id : vorausgesetzteVorlesungenId) {
+            vorausgesetzteVorlesungenBezeichnung.add(bezeichnungAusId(id));
+        }
+        return vorausgesetzteVorlesungenBezeichnung;
+    }
+
+    public String bezeichnungAusId(Long id) {
+        Vorlesung vorlesung = vorlesungenRepository.findById(id).get();
+        return vorlesung.getBezeichnung();
+    }
+
+    public void isCheckBoxAusgewählt(Long id) {
+        Vorlesung vorlesung = vorlesungenRepository.findById(id).get();
+        vorlesung.setAusgewaehlt(!vorlesung.isAusgewaehlt());
+        vorlesungenRepository.save(vorlesung);
     }
 
 }
