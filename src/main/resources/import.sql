@@ -1,1 +1,2 @@
-insert into Vorlesung (id, bezeichnung, wochentag, ausgewaehlt, uhrzeit) values ('1', 'Mathematik 1', 'Mittwoch', 'false', '8:30'), ('2', 'Mathematik 2', 'Dienstag', 'false', '8:30'), ('3', 'Elektrotechnik', 'Dienstag', 'false', '8:30'), ('4', 'Programmieren 1', 'Mittwoch', 'false', '8:30');
+insert into Vorlesung (id, bezeichnung, wochentag, ausgewaehlt, uhrzeit) values ('1', 'Mathematik 1', 'Mittwoch', 'false', '10:15'), ('2', 'Mathematik 2', 'Dienstag', 'false', '8:30'), ('3', 'Elektrotechnik', 'Dienstag', 'false', '10:15'), ('4', 'Programmieren 1', 'Mittwoch', 'false', '8:30'), ('5', 'Programmieren 2', 'Donnerstag', 'false', '8:30');
+insert into VORAUSGESETZTE_VORLESUNGEN (id, vorlesungs_Id) values ('2', '1'), ('3', '1'), ('5', '4');

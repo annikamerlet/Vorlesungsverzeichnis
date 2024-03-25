@@ -1,8 +1,6 @@
 package com.example.demo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -15,7 +13,14 @@ public class Vorlesung {
     private String bezeichnung;
     private String wochentag;
     private String uhrzeit;
-    
+
+    @ElementCollection
+    @CollectionTable(
+            name = "vorausgesetzte_Vorlesungen",
+            joinColumns = {@JoinColumn(name = "id")}
+    )
+    @Column(name = "vorlesungsId")
+
     private List<Long> vorausgesetzteVorlesungen;
 
 
