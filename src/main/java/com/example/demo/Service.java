@@ -27,7 +27,7 @@ public class Service {
         return vorlesungen;
     }
 
-    public List<LinkedHashMap> erhalteSortierteVorlesungen(String filter) {
+    public LinkedHashMap<String, LinkedHashMap> erhalteSortierteVorlesungen(String filter) {
         List<Vorlesung> alleVorlesungen = erhalteGefilterteVorlesungen(filter);
 
         //Liste: Vorlesungen nach Zeitslot sortiert
@@ -51,9 +51,9 @@ public class Service {
         zweiterZeitslot.put("Freitag", erstelleVorlesungenImZeitslot(ZeitslotZwei, "Freitag"));
 
         //Liste aus LinkedHashMaps:
-        List<LinkedHashMap> sortierteVorlesungen = new ArrayList<>();
-        sortierteVorlesungen.add(ersterZeitslot);
-        sortierteVorlesungen.add(zweiterZeitslot);
+        LinkedHashMap<String, LinkedHashMap> sortierteVorlesungen = new LinkedHashMap<>();
+        sortierteVorlesungen.put("8:30Uhr - 10:00Uhr", ersterZeitslot);
+        sortierteVorlesungen.put("10:15Uhr - 11:45Uhr", zweiterZeitslot);
 
         return sortierteVorlesungen;
     }

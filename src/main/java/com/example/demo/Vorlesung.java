@@ -72,14 +72,16 @@ public class Vorlesung {
         return uhrzeit;
     }
 
+//    public void setUhrzeit(String zeit) {
+//        List<Integer> zahlen = List.of(Integer.valueOf(zeit.split(":")));
+//        int stunde = zahlen.get(0);
+//        int minute = zahlen.get(1);
+//        this.uhrzeit = LocalTime.of(stunde, minute);
+//    }
+
     public void setUhrzeit(int stunde, int minute) {
         this.uhrzeit = LocalTime.of(stunde, minute);
     }
-
-//    public void setUhrzeit(String zeit) {
-//        zeit=zeit(split())
-//        this.uhrzeit = LocalTime.of(zeit);
-//    }
 
     public List<Long> getVorausgesetzteVorlesungen() {
         return vorausgesetzteVorlesungen;

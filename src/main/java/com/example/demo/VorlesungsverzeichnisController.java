@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 @Controller // Controller befüllt Model, damit der View (html-Datei) die Daten aus dem Model darstellen kann
 @RequestMapping("/Vorlesungsverzeichnis")
@@ -22,8 +21,9 @@ public class VorlesungsverzeichnisController {
     @GetMapping
     public String Vorlesungsverzeichnis(Model model, @RequestParam(required = false, defaultValue = "") String alleFilter) {
 
-        List<LinkedHashMap> sortierteVorlesungen = service.erhalteSortierteVorlesungen(alleFilter);
+        LinkedHashMap<String, LinkedHashMap> sortierteVorlesungen = service.erhalteSortierteVorlesungen(alleFilter);
         model.addAttribute("Vorlesungsverzeichnis", sortierteVorlesungen);
+
 
         return "Vorlesungsverzeichnis";
     }
