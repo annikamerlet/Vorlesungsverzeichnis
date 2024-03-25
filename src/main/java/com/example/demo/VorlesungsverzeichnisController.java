@@ -26,15 +26,16 @@ public class VorlesungsverzeichnisController {
         List<Vorlesung> vorlesungen = vorlesungenRepository.findAll(); // Liste mit allen Vorlesungen
 
         // case-insensitivity
-        for (Vorlesung vorlesung : vorlesungen) {
-            vorlesung.setBezeichnung(vorlesung.getBezeichnung().toLowerCase());
-            vorlesung.setWochentag(vorlesung.getWochentag().toLowerCase());
-        }
+//        List<Vorlesung> vorlesungenKleingeschrieben = vorlesungen;
+//        for (Vorlesung v : vorlesungenKleingeschrieben) {
+//            v.setBezeichnung(v.getBezeichnung().toLowerCase());
+//            v.setWochentag(v.getWochentag().toLowerCase());
+//        }
 
         for (String element : filterListe) // passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
         {
             vorlesungen = vorlesungen.stream()
-                    .filter(w -> (w.getWochentag().contains(element) || w.getBezeichnung().contains(element))).collect(Collectors.toList());
+                    .filter(w -> (w.getWochentag().toLowerCase().contains(element) || w.getBezeichnung().toLowerCase().contains(element))).collect(Collectors.toList());
         }
 
         model.addAttribute("Vorlesungsverzeichnis", vorlesungen);
