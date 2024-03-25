@@ -15,7 +15,6 @@ public class Vorlesung {
 
     private boolean ausgewaehlt;
 
-
     public Vorlesung() {
         // required by hibernate
     }

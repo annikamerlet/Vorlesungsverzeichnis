@@ -22,8 +22,12 @@ public class VorlesungsverzeichnisController {
     @GetMapping
     public String Vorlesungsverzeichnis(Model model, @RequestParam(required = false, defaultValue = "") String alleFilter) {
 
-        List<String> filterListe = List.of(alleFilter.split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
+        List<String> filterListe = List.of(alleFilter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
         List<Vorlesung> vorlesungen = vorlesungenRepository.findAll(); // Liste mit allen Vorlesungen
+
+        for (Vorlesung vorlesung : vorlesungen) {
+            vorlesung.setBezeichnung(vorlesung.getBezeichnung().toLowerCase());
+        }
 
         for (String element : filterListe) // passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
         {
