@@ -21,8 +21,8 @@ public class Vorlesung {
             joinColumns = {@JoinColumn(name = "id")}
     )
     @Column(name = "VORAUSGESETZTE_VORLESUNGEN_ID")
-    private List<Long> vorausgesetzteVorlesungen;
 
+    private List<Long> vorausgesetzteVorlesungen;
 
     @Transient
     private List<String> bezeichnungVorausgesetzteVorlesungen;

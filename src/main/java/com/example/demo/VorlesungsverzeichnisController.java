@@ -14,6 +14,7 @@ public class VorlesungsverzeichnisController {
     @Autowired // Vorlesungsverzeichnis erzeugt
     private Service service;
 
+    // nach Suchkriterium filtern
     @GetMapping
     public String zeigeVorlesungsverzeichnis(Model model, @RequestParam(required = false, defaultValue = "") String alleFilter) {
 
@@ -22,6 +23,7 @@ public class VorlesungsverzeichnisController {
         return "Vorlesungsverzeichnis";
     }
 
+    // nach Semester sortieren
     @GetMapping("/semester/{semester}")
     public String zeigeVorlesungsverzeichnisFuerSemester(Model model, @RequestParam(required = false, defaultValue = "") String alleFilter, @PathVariable int semester) {
 
@@ -30,9 +32,10 @@ public class VorlesungsverzeichnisController {
         return "Vorlesungsverzeichnis";
     }
 
+    // dem Stundenplan hinzufügen/entfernen
     @PostMapping("/save")
     public String post(Model model, @RequestParam long id) {
-        service.isCheckBoxAusgewählt(id);
+        service.isVorlesungAusgewaehlt(id);
         return "redirect:/Vorlesungsverzeichnis";
     }
 

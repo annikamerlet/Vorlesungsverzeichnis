@@ -18,14 +18,14 @@
 
 <h1>Vorlesungsverzeichnis</h1>
 
-
+<!--Filter nach Vorlesungsbezeichnung oder Wochentag-->
 <h3> Suche</h3>
 <form>
     <input name="alleFilter" the:value="${filter}" type="text">
     <input type="submit">
 </form>
 
-
+<!--Filter nach Semester-->
 <div class="btn-group">
     <button aria-expanded="false" aria-haspopup="true" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
             type="button">
@@ -38,13 +38,12 @@
         <a class="dropdown-item" href="/Vorlesungsverzeichnis/semester/4">Semester 4</a>
         <a class="dropdown-item" href="/Vorlesungsverzeichnis/semester/5">Semester 5</a>
         <a class="dropdown-item" href="/Vorlesungsverzeichnis/semester/6">Semester 6</a>
-        <a class="dropdown-item" href="/Vorlesungsverzeichnis/semester/6">Semester 6</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a>
+        <a class="dropdown-item" href="/Vorlesungsverzeichnis">Filter zurücksetzen</a>
     </div>
 </div>
 
-
+<!--Tabelle-->
 <table class="table">
     <thead>
     <tr>
@@ -54,7 +53,6 @@
         <th scope="col">Mittwoch</th>
         <th scope="col">Donnerstag</th>
         <th scope="col">Freitag</th>
-
     </tr>
     </thead>
     <tbody>
@@ -67,7 +65,7 @@
                     <div th:text="${'Voraussetzung: '}+${vorlesung.bezeichnungVorausgesetzteVorlesungen}"></div>
                     <div>
                         <input name="id" th:value="${vorlesung.id}" type="hidden">
-                        <button class="btn btn-outline-primary" th:unless="${vorlesung.ausgewaehlt}" type="submit">zum
+                        <button class="btn btn-outline-secondary" th:unless="${vorlesung.ausgewaehlt}" type="submit">zum
                             Stundenplan hinzufügen
                         </button>
                         <button class="btn btn-outline-primary" th:if="${vorlesung.ausgewaehlt}" type="submit">vom

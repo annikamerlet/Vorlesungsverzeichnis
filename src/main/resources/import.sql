@@ -1,3 +1,2 @@
 insert into Vorlesung (id, bezeichnung, wochentag, semester, ausgewaehlt, uhrzeit) values ('1', 'Mathematik 1', 'Mittwoch', '1', 'false', '10:15'), ('2', 'Mathematik 2', 'Dienstag', '2', 'false', '8:30'), ('3', 'Elektrotechnik', 'Dienstag', '3', 'false', '8:30'), ('4', 'Programmieren 1', 'Mittwoch', '1', 'false', '8:30'), ('5', 'Programmieren 2', 'Donnerstag', '2', 'false', '8:30');
 insert into VORAUSGESETZTE_VORLESUNGEN (id,	VORAUSGESETZTE_VORLESUNGEN_ID) values ('2', '1'), ('3', '1'), ('5', '4'), ('5','1');
---select Vorlesung.bezeichnung from VORAUSGESETZTE_VORLESUNGEN where Vorlesung.id=VORAUSGESETZTE_VORLESUNGEN.id and Vorlesung.id=VORAUSGESETZTE_VORLESUNGEN.vorlesungs_id;
