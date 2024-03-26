@@ -20,11 +20,14 @@ public class Vorlesung {
             name = "vorausgesetzte_Vorlesungen",
             joinColumns = {@JoinColumn(name = "id")}
     )
-    @Column(name = "vorlesungsId")
-
+    @Column(name = "VORAUSGESETZTE_VORLESUNGEN_ID")
     private List<Long> vorausgesetzteVorlesungen;
 
 
+    @Transient
+    private List<String> bezeichnungVorausgesetzteVorlesungen;
+
+    private Integer semester;
     private boolean ausgewaehlt;
 
     public Vorlesung() {
@@ -60,6 +63,14 @@ public class Vorlesung {
         this.wochentag = wochentag;
     }
 
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
+    }
+
     public boolean isAusgewaehlt() {
         return ausgewaehlt;
     }
@@ -89,6 +100,14 @@ public class Vorlesung {
 
     public void setVorausgesetzteVorlesungen(List<Long> vorausgesetzteVorlesungen) {
         this.vorausgesetzteVorlesungen = vorausgesetzteVorlesungen;
+    }
+
+    public List<String> getBezeichnungVorausgesetzteVorlesungen() {
+        return bezeichnungVorausgesetzteVorlesungen;
+    }
+
+    public void setBezeichnungVorausgesetzteVorlesungen(List<String> bezeichnungVorausgesetzteVorlesungen) {
+        this.bezeichnungVorausgesetzteVorlesungen = bezeichnungVorausgesetzteVorlesungen;
     }
 
     @Override

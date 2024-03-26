@@ -13,11 +13,21 @@ public class Service {
     @Autowired // Vorlesungsverzeichnis erzeugt
     private VorlesungsverzeichnisRepository vorlesungenRepository;
 
-    //    public List<Vorlesung> semesterAnsicht(String filter){
-//        List<Vorlesung> alleVorlesungen = erhalteGefilterteVorlesungen(filter);
-//        alleVorlesungen.stream().filter(vor -> vor.getSemester().equals().collect(Collectors.toList());
-//    }
-    public List<Vorlesung> erhalteGefilterteVorlesungen(String filter) {
+    private List<Vorlesung> erhalteGefilterteVorlesungen(String filter, int semester) {
+
+        List<String> filterListe = List.of(filter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
+        List<Vorlesung> vorlesungen = vorlesungenRepository.findBySemesterEquals(semester); // Liste mit allen Vorlesungen
+
+        for (String element : filterListe) // über Filter schleifen: passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
+        {
+            vorlesungen = vorlesungen.stream()
+                    .filter(w -> (w.getWochentag().toLowerCase().contains(element) || w.getBezeichnung().toLowerCase().contains(element))).collect(Collectors.toList());
+        }
+
+        return vorlesungen;
+    }
+
+    private List<Vorlesung> erhalteGefilterteVorlesungen(String filter) {
 
         List<String> filterListe = List.of(filter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
         List<Vorlesung> vorlesungen = vorlesungenRepository.findAll(); // Liste mit allen Vorlesungen
@@ -31,8 +41,17 @@ public class Service {
         return vorlesungen;
     }
 
-    public LinkedHashMap<String, LinkedHashMap> erhalteSortierteVorlesungen(String filter) {
-        List<Vorlesung> alleVorlesungen = erhalteGefilterteVorlesungen(filter);
+    public LinkedHashMap<String, LinkedHashMap> erhalteSortierteVorlesungen(String filter, int semester) {
+        List<Vorlesung> alleVorlesungen;
+        if (semester > 0) {
+            alleVorlesungen = erhalteGefilterteVorlesungen(filter, semester);
+        } else {
+            alleVorlesungen = erhalteGefilterteVorlesungen(filter);
+        }
+
+        for (Vorlesung v : alleVorlesungen) {
+            v.setBezeichnungVorausgesetzteVorlesungen(bezeichnungVorausgesetzteVorlesungen(v));
+        }
 
         //Liste: Vorlesungen nach Zeitslot sortiert
         List<Vorlesung> ZeitslotEins = alleVorlesungen.stream().filter(vor -> vor.getUhrzeit().equals(LocalTime.of(8, 30))).collect(Collectors.toList());
@@ -73,6 +92,7 @@ public class Service {
         return vorlesungenWochentag;
     }
 
+    //aus Liste von Ids -> Liste von Bezeichnungen
     public List<String> bezeichnungVorausgesetzteVorlesungen(Vorlesung v) {
         List<Long> vorausgesetzteVorlesungenId = v.getVorausgesetzteVorlesungen();
         List<String> vorausgesetzteVorlesungenBezeichnung = new ArrayList<>();
@@ -82,7 +102,7 @@ public class Service {
         return vorausgesetzteVorlesungenBezeichnung;
     }
 
-    public String bezeichnungAusId(Long id) {
+    private String bezeichnungAusId(Long id) {
         Vorlesung vorlesung = vorlesungenRepository.findById(id).get();
         return vorlesung.getBezeichnung();
     }
