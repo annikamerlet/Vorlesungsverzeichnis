@@ -10,8 +10,10 @@ import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class Service {
+
     @Autowired // Vorlesungsverzeichnis erzeugt
     private VorlesungsverzeichnisRepository vorlesungenRepository;
+    private List<Vorlesung> vorlesungen;
 
     public LinkedHashMap<String, LinkedHashMap> erhalteSortierteVorlesungen(String filter, int semester) {
 
@@ -23,7 +25,7 @@ public class Service {
             alleVorlesungen = erhalteGefilterteVorlesungen(filter);
         }
 
-        //die Bezeichnung für die id's der vorausgesetzten Vorlesungen speichern
+        //die Bezeichnung für die id's der vorausgesetzten Vorlesungen gespeichert
         for (Vorlesung v : alleVorlesungen) {
             v.setBezeichnungVorausgesetzteVorlesungen(bezeichnungVorausgesetzteVorlesungen(v));
         }
@@ -58,39 +60,29 @@ public class Service {
 
     // Vorlesungen nach Filterkriterium filtern (1.getMapping)
     private List<Vorlesung> erhalteGefilterteVorlesungen(String filter) {
-
-        List<String> filterListe = List.of(filter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
-        List<Vorlesung> vorlesungen = vorlesungenRepository.findAll(); // Liste mit allen Vorlesungen
-
-        for (String element : filterListe) // über Filter schleifen: passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
-        {
-            vorlesungen = vorlesungen.stream()
-                    .filter(w -> (w.getWochentag().toLowerCase().contains(element) || w.getBezeichnung().toLowerCase().contains(element))).collect(Collectors.toList());
+        if (filter.isEmpty()) {
+            vorlesungen = vorlesungenRepository.findAll();
+        } else {
+            vorlesungen = vorlesungenRepository.findByBezeichnungIgnoreCaseContaining(filter);
         }
-
         return vorlesungen;
     }
 
     // Vorlesungen nach Filterkriterium und Semester filtern (2.getMapping)
     private List<Vorlesung> erhalteGefilterteVorlesungen(String filter, int semester) {
-
-        List<String> filterListe = List.of(filter.toLowerCase().split(" ")); // trennt Eingabe nach Leerzeichen und speichert diese in Liste
-        List<Vorlesung> vorlesungen = vorlesungenRepository.findBySemesterEquals(semester); // Liste mit allen Vorlesungen
-
-        for (String element : filterListe) // über Filter schleifen: passt die Liste zunächst auf das 1.Listenelement an, dann auf das 2, 3., ... (so viele Listeneinträge es gibt)
-        {
-            vorlesungen = vorlesungen.stream()
-                    .filter(w -> (w.getWochentag().toLowerCase().contains(element) || w.getBezeichnung().toLowerCase().contains(element))).collect(Collectors.toList());
+        if (filter.isEmpty()) {
+            vorlesungen = vorlesungenRepository.findBySemesterEquals(semester);
+        } else {
+            vorlesungen = vorlesungenRepository.findByBezeichnungIgnoreCaseContainingAndSemesterEquals(filter, semester);
         }
-
         return vorlesungen;
     }
 
-    private List<Vorlesung> erstelleVorlesungenImZeitslot(List<Vorlesung> vorlesungen, String Wochentag) {
 
+    private List<Vorlesung> erstelleVorlesungenImZeitslot(List<Vorlesung> vorlesungen, String Wochentag) {
         List<Vorlesung> vorlesungenWochentag = new ArrayList<>();
         for (Vorlesung v : vorlesungen) {
-            if (v.getWochentag().equals(Wochentag)) {
+            if (v.getWochentag().equals(Wochentag)) { // !!!
                 vorlesungenWochentag.add(v);
             }
         }
@@ -107,15 +99,16 @@ public class Service {
         return vorausgesetzteVorlesungenBezeichnung;
     }
 
+
     //aus einzelner id -> Bezeichnung
     private String bezeichnungAusId(Long id) {
-        Vorlesung vorlesung = vorlesungenRepository.findById(id).get();
+        Vorlesung vorlesung = vorlesungenRepository.findById(id).get(); //!!!
         return vorlesung.getBezeichnung();
     }
 
     // boolscher Wert für vorlesung ist ausgewählt invertiert
     public void isVorlesungAusgewaehlt(Long id) {
-        Vorlesung vorlesung = vorlesungenRepository.findById(id).get();
+        Vorlesung vorlesung = vorlesungenRepository.findById(id).get(); //!!!
         vorlesung.setAusgewaehlt(!vorlesung.isAusgewaehlt());
         vorlesungenRepository.save(vorlesung);
     }

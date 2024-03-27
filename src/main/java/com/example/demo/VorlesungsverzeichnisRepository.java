@@ -9,7 +9,8 @@ import java.util.List;
 public interface VorlesungsverzeichnisRepository extends JpaRepository<Vorlesung, Long> {
     List<Vorlesung> findBySemesterEquals(int semester);
 
+    List<Vorlesung> findByBezeichnungIgnoreCaseContaining(String Bezeichnung);
 
-    //List<Vorlesung> findAllByausgewaehltEquals(boolean value);
+    List<Vorlesung> findByBezeichnungIgnoreCaseContainingAndSemesterEquals(String bezeichnung, int semester);
 
 }
